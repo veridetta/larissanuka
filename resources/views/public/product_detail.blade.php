@@ -42,6 +42,7 @@
                         <div class="row p-2 h-100">
                             <div class="my-auto">
                                 <h3 class="fw-bold mb-3">Baju</h3>
+                                <h5 class="fw-bold">Rp. {{ number_format(200000, 2, ',', '.') }}</h5>
                                 <p class="" style="width: 70%">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis porro dolorum corporis in praesentium maxime harum sint iusto voluptates exercitationem, ex, optio, laboriosam officia velit expedita. Rerum aliquam numquam dolorum?</p>
                                 <button class="btn btn-pink mt-4">Tambah Keranjang</button> <button class="btn btn-pink ml-4 mt-4">Beli Sekarang</button> <div class="clearfix"></div><button class="btn btn-outline-info  mt-4"><i class="fa fa-bookmark fa-1x"></i> {{ isset($favorit) ? 'Hapus Favorit' : 'Tambah ke Favorit' }}</button>
                             </div>
@@ -84,7 +85,8 @@
                             <div class="card h-100">
                                 <div class="card-body p-4 h-100">
                                     <p  class="text-center"><img src="{{ asset('storage/img/product/1.png') }}" alt="" style="width: 100%;height:250x;"></p>
-                                    <h6 class="text-center"><a href="#">Nama Produk</a></h6>
+                                    <h6 class=""><a href="#">Nama Produk</a></h6>
+                                    <p class="fw-bold">Rp. {{ number_format(200000, 2, ',', '.') }}</p>
                                 </div>
                             </div>
                         </div>

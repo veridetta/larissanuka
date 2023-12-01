@@ -22,6 +22,7 @@
                     <div class="card-body p-4 h-100">
                         <p  class="text-center"><img src="{{ asset('storage/img/product/1.png') }}" alt="" style="width: 100%;height:250x;"></p>
                         <h6 class="text-center"><a href="#">Nama Produk</a></h6>
+                        <p class="fw-bold">Rp. {{ number_format(200000, 2, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
