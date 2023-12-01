@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -31,6 +32,9 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Pink,
             ])
+            ->favicon(asset('storage/img/logo.png') )
+            ->brandLogo(fn () => view('vendor/filament/components/brand'))
+            ->brandLogoHeight('2rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -54,6 +58,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Stores'),
+                NavigationGroup::make()
+                    ->label('Transactions'),
+                NavigationGroup::make()
+                    ->label('Ratings')
             ]);
+            ;
     }
 }

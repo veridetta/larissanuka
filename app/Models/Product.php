@@ -29,13 +29,29 @@ class Product extends Model
     {
         return $this->hasMany(Rating::class);
     }
+    //relasi customer sama-sama menggunakan user_id
+    public function customer()
+    {
+        return $this->hasMany(Customer::class, 'user_id');
+    }
+    //relasi dimension
+    public function dimension()
+    {
+        return $this->hasOne(Dimension::class);
+    }
     //boot slug
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($product) {
+            Product::where('isPromosi', true)->update(['isPromosi' => false]);
             $product->slug = Str::slug($product->nama);
+
+        });
+        static::updating(function($product){
+            Product::where('isPromosi', true)->update(['isPromosi' => false]);
         });
     }
+
 
 }

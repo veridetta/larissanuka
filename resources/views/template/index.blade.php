@@ -33,9 +33,18 @@
             font-weight: normal;
             font-style: normal;
         }
+        @font-face {
+            font-family: 'Gyre';
+            src: url('{{ asset('/storage/font/gyre/gyre.otf') }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         .lucida {
-            font-family: 'Lucida', sans-serif;
+            font-family: 'Gyre', sans-serif;
+        }
+        .gyre {
+            font-family: 'Gyre', sans-serif;
         }
 
         body, p, h1, h2, h3, h4, h5, h6 {

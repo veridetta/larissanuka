@@ -23,4 +23,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Service::class);
     }
+    //relasi delivery address
+    public function deliveryAddress()
+    {
+        return $this->hasOne(DeliveryAddress::class);
+    }
 }

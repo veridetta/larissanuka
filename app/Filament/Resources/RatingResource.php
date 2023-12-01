@@ -9,7 +9,9 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use IbrahimBougaoua\FilamentRatingStar\Columns\RatingStarColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -17,7 +19,10 @@ class RatingResource extends Resource
 {
     protected static ?string $model = Rating::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static ?string $navigationGroup = 'Ratings';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel="Rating";
 
     public static function form(Form $form): Form
     {
@@ -43,34 +48,29 @@ class RatingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('product.nama')
+                    ->label('Nama Produk')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('product_id')
-                    ->numeric()
+                TextColumn::make('customer.nama')
+                    ->label('Nama Customer')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('rating')
-                    ->numeric()
+                RatingStarColumn::make('rating')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    TextColumn::make('review')
+                    ->label('Review')
+                    ->html()
+                    ->limit(30),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
