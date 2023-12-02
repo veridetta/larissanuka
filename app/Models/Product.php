@@ -39,6 +39,11 @@ class Product extends Model
     {
         return $this->hasOne(Dimension::class);
     }
+    //relasi favorit
+    public function favorit()
+    {
+        return $this->hasMany(Favorit::class);
+    }
     //boot slug
     protected static function boot()
     {

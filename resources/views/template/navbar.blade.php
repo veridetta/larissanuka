@@ -7,16 +7,29 @@
         <ul class="navbar-nav ml-auto">
             @if(Auth::check())
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{{route('public.index')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Product</a>
+                    <a class="nav-link" href="{{route('public.product')}}">Product</a>
+                </li>
+                <li class="nav-item pr-2">
+                    <a class="nav-link" href="#">
+                        Keranjang
+                        @if($cartCount > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Transaksi</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('auth.logout') }}">Logout</a>
                 </li>
             @else
                 <li class="nav-item">

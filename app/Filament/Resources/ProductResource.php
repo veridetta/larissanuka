@@ -71,15 +71,19 @@ class ProductResource extends Resource
                                     ->schema([
                                         Forms\Components\TextInput::make('panjang')
                                             ->required()
+                                            ->suffix('cm')
                                             ->numeric(),
                                         Forms\Components\TextInput::make('lebar')
                                             ->required()
+                                            ->suffix('cm')
                                             ->numeric(),
                                         Forms\Components\TextInput::make('tinggi')
                                             ->required()
+                                            ->suffix('cm')
                                             ->numeric(),
                                         Forms\Components\TextInput::make('berat')
                                             ->required()
+                                            ->suffix('gram')
                                             ->numeric(),
                                     ])
                             ]),
