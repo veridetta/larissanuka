@@ -8,14 +8,12 @@ class LoginResponse extends \Filament\Http\Responses\Auth\LoginResponse
 {
     public function toResponse($request): RedirectResponse|Redirector
     {
-
-        //check role user
         if (auth()->user()->role == 'admin') {
             return redirect()->to(route('filament.dashboard'));
         } else if (auth()->user()->role == 'user') {
             //cek halaman terakhir
-            if (session()->has('last_page')) {
-                return redirect()->to(session()->get('last_page'));
+            if (session()->has('kembali')) {
+                return redirect()->to(session()->get('kembali'));
             }
             return redirect()->to(route('public.index'));
         }

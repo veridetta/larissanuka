@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class PublicController extends Controller
 {
     public function index(){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             $cartCount = 0;
         }else{
@@ -25,6 +26,7 @@ class PublicController extends Controller
         return view('public/index',['baru' => $baru, 'promosi' => $promosi, 'cartCount'=>$cartCount]);
     }
     public function product(){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             $cartCount = 0;
         }else{
@@ -36,6 +38,7 @@ class PublicController extends Controller
         return view('public/product',['cartCount'=>$cartCount]);
     }
     public function product_detail($id){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             $cartCount = 0;
             $favorit = null;
@@ -53,6 +56,7 @@ class PublicController extends Controller
         return view('public/product_detail', ['produk' => $produk, 'produk_terkait' => $produk_terkait, 'review' => $review, 'cartCount'=>$cartCount, 'favorit' => $favorit]);
     }
     public function tambah_keranjang(Request $request){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             return redirect()->route('filament.admin.auth.login')->with('error', 'Silahkan login terlebih dahulu');
         }
@@ -74,6 +78,7 @@ class PublicController extends Controller
         return redirect()->back()->with('success', 'Berhasil menambahkan produk ke keranjang');
     }
     public function tambah_favorit(Request $request){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             return redirect()->route('filament.admin.auth.login')->with('error', 'Silahkan login terlebih dahulu');
         }
@@ -93,6 +98,7 @@ class PublicController extends Controller
         return redirect()->back()->with('success', 'Berhasil menambahkan produk ke favorit');
     }
     public function single_checkout(Request $request){
+        session()->put('kembali', url()->previous());
         if(!auth()->check()){
             $cartCount = 0;
         }else{
