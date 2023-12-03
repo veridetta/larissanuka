@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Filament\Resources\TransactionResource\RelationManagers;
+use App\Models\Product;
 use App\Models\Transaction;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -59,7 +61,7 @@ class TransactionResource extends Resource
                     Section::make('Informasi Pengiriman')
                     ->description('Berikut merupakan informasi pengiriman atas transaksi ini.')
                     ->schema([
-                        Repeater::make('services')
+                        Repeater::make('service')
                         ->relationship()
                         ->maxItems(1)
                         ->schema([
@@ -77,17 +79,17 @@ class TransactionResource extends Resource
                             ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                             ->disabled(),
                         ]),
-                        Repeater::make('deliveryAddress')
+                        Repeater::make('customer')
                         ->relationship()
                         ->maxItems(1)
                         ->schema([
                             TextInput::make('nama')
                             ->label('Nama Penerima')
                             ->disabled(),
-                            TextInput::make('provinsi')
+                            TextInput::make('provinsi_name')
                             ->label('Provinsi')
                             ->disabled(),
-                            TextInput::make('kota')
+                            TextInput::make('kota_name')
                             ->label('Kota / Kabupaten')
                             ->disabled(),
                             TextInput::make('kecamatan')
@@ -116,17 +118,20 @@ class TransactionResource extends Resource
                             return $record->transactionDetail()->count();
                         })
                         ->schema([
-                            TextInput::make('product.nama')
-                            ->label('Nama Produk')
-                            ->disabled(),
+                            Placeholder::make('product.name')
+                            ->label('Nama Barang')
+                            ->content(function($record){
+                                $produk = Product::where('id',$record->product_id)->first();
+                                return $produk->nama;
+                            }),
                             TextInput::make('qty')
                             ->label('Jumlah')
                             ->disabled(),
-                            TextInput::make('harga')
+                            TextInput::make('price')
                             ->label('Harga')
                             ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                             ->disabled(),
-                            TextInput::make('subtotal')
+                            TextInput::make('total')
                             ->label('Subtotal')
                             ->currencyMask(thousandSeparator: '.',decimalSeparator: ',',precision: 2)
                             ->disabled(),
@@ -140,6 +145,10 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
+                //tanggal
+                TextColumn::make('created_at')
+                ->label('Tanggal')
+                ->dateTime(),
                 TextColumn::make('transaction_code')
                 ->label('Kode')
                 ->searchable(),
@@ -165,6 +174,7 @@ class TransactionResource extends Resource
                     'menunggu konfirmasi' => 'blue',
                     'dikirim' => 'yellow',
                     'selesai' => 'green',
+                    'pembayaran gagal' => 'red',
                 }),
             ])
             ->filters([

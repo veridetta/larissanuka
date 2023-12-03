@@ -12,4 +12,9 @@ class ProductImage extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    //favorit
+    public function favorit()
+    {
+        return $this->belongsTo(Favorit::class,'product_id','product_id');
+    }
 }

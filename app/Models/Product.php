@@ -44,17 +44,17 @@ class Product extends Model
     {
         return $this->hasMany(Favorit::class);
     }
+    //relasi cart
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
     //boot slug
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($product) {
-            Product::where('isPromosi', true)->update(['isPromosi' => false]);
             $product->slug = Str::slug($product->nama);
-
-        });
-        static::updating(function($product){
-            Product::where('isPromosi', true)->update(['isPromosi' => false]);
         });
     }
 

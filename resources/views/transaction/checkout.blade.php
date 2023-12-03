@@ -33,13 +33,17 @@
                     </div>
                     <div class="card-body">
                         <table class="w-100">
-                            <tr class="w-100">
-                                <td>1. </td>
-                                <td class="font-weight-bold">{{$produk->nama}}</td>
-                                <td>Rp. {{ number_format($produk->harga, 2, ',', '.') }}</td>
-                                <td>x 1</td>
-                                <td class="font-weight-bold">Rp. {{ number_format($produk->harga, 2, ',', '.') }}</td>
-                            </tr>
+                            <?php $n=1;?>
+                            @foreach ($cart as $produk)
+                                <tr class="w-100">
+                                    <td>{{$n}}. </td>
+                                    <td class="font-weight-bold">{{$produk->product->nama}}</td>
+                                    <td>Rp. {{ number_format($produk->product->harga, 2, ',', '.') }}</td>
+                                    <td>x {{$produk->qty}}</td>
+                                    <td class="font-weight-bold">Rp. {{ number_format(($produk->product->harga * $produk->qty), 2, ',', '.') }}</td>
+                                </tr>
+                                <?php $n++;?>
+                            @endforeach
                         </table>
                     </div>
                 </div>
@@ -110,10 +114,9 @@
                 <p class="h4 text-right"><span id="total">Total : Rp. {{ number_format($produk->harga, 2, ',', '.') }}</span></p>
                 <form method="post" action="{{route('buat-pesanan')}}" class="d-inline">
                     @csrf
-                    <input type="hidden" name="product_id" value="{{$produk->id}}"/>
                     <input type="hidden" name="customer_id" value="{{$customer->id}}"/>
                     <input type="hidden" name="service" value=""/>
-                    <input type="hidden" name="tipe" value="single"/>
+                    <input type="hidden" name="tipe" value="multiple"/>
                     <input type="hidden" name="ongkir" value=""/>
                     <input type="hidden" name="kurir" value=""/>
                     <input type="hidden" name="total" value="{{$produk->harga}}"/>
@@ -132,7 +135,7 @@
     <!-- Your home page JavaScript goes here -->
     <script>
         $(document).ready(function(){
-            var total = parseInt({{$produk->harga}});
+            var total = parseInt({{$total_harga}});
             $('input[type=radio][name=selectedService]').change(function() {
                 var service_mentah = $(this).val();
                 var service_parts = service_mentah.split('-');

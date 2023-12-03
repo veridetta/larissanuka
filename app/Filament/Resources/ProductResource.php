@@ -94,6 +94,7 @@ class ProductResource extends Resource
                                     ->schema([
                                         FileUpload::make('path')
                                         ->required()
+                                        ->image()
                                         ->visibility('public')
                                         ->directory('product-images')
                                     ])

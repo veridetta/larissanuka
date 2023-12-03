@@ -11,6 +11,6 @@ class Service extends Model
     //relasi transaction
     public function transaction()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Transaction::class);
     }
 }

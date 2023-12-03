@@ -35,7 +35,22 @@ class PublicController extends Controller
                 $cartCount = 0;
             }
         }
-        return view('public/product',['cartCount'=>$cartCount]);
+        $produk = Product::orderBy('created_at', 'DESC')->paginate(12);
+        return view('public/product',['cartCount'=>$cartCount, 'produk' => $produk]);
+    }
+    public function product_cari(Request $request){
+        session()->put('kembali', url()->previous());
+        if(!auth()->check()){
+            $cartCount = 0;
+        }else{
+            $cartCount = Cart::where('user_id',auth()->user()->id)->count();
+            if($cartCount == null){
+                $cartCount = 0;
+            }
+        }
+        $produk = Product::where('nama', 'like', '%'.$request->search.'%')->orderBy('created_at', 'DESC')->paginate(12);
+
+        return view('public/product',['cartCount'=>$cartCount, 'produk' => $produk]);
     }
     public function product_detail($id){
         session()->put('kembali', url()->previous());
@@ -113,13 +128,40 @@ class PublicController extends Controller
         $this->validate($request, [
             'product_id' => 'required',
         ]);
-        // $rajaOngkirController = new RajaOngkirController;
-        // $jne = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jne'));
-        // $jnt = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jnt'));
-        $jne=json_decode('{"rajaongkir":{"query":{"origin":"501","destination":"114","weight":1700,"courier":"jne"},"status":{"code":200,"description":"OK"},"origin_details":{"city_id":"501","province_id":"5","province":"DI Yogyakarta","type":"Kota","city_name":"Yogyakarta","postal_code":"55111"},"destination_details":{"city_id":"114","province_id":"1","province":"Bali","type":"Kota","city_name":"Denpasar","postal_code":"80227"},"results":[{"code":"jne","name":"Jalur Nugraha Ekakurir (JNE)","costs":[{"service":"OKE","description":"Ongkos Kirim Ekonomis","cost":[{"value":54000,"etd":"4-5","note":""}]},{"service":"REG","description":"Layanan Reguler","cost":[{"value":62000,"etd":"2-3","note":""}]}]}]}}');
-        $jnt = $jne;
+         $rajaOngkirController = new RajaOngkirController;
+         $jne = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jne'));
+         $jnt = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jnt'));
+        // $jne=json_decode('{"rajaongkir":{"query":{"origin":"501","destination":"114","weight":1700,"courier":"jne"},"status":{"code":200,"description":"OK"},"origin_details":{"city_id":"501","province_id":"5","province":"DI Yogyakarta","type":"Kota","city_name":"Yogyakarta","postal_code":"55111"},"destination_details":{"city_id":"114","province_id":"1","province":"Bali","type":"Kota","city_name":"Denpasar","postal_code":"80227"},"results":[{"code":"jne","name":"Jalur Nugraha Ekakurir (JNE)","costs":[{"service":"OKE","description":"Ongkos Kirim Ekonomis","cost":[{"value":54000,"etd":"4-5","note":""}]},{"service":"REG","description":"Layanan Reguler","cost":[{"value":62000,"etd":"2-3","note":""}]}]}]}}');
+        // $jnt = $jne;
         $customer =Customer::where('user_id', auth()->user()->id)->first();
         $produk = Product::findOrFail($request->product_id);
         return view('transaction.single_chekout', ['id' => $produk->id,'produk' => $produk, 'customer' => $customer, 'cartCount'=>$cartCount, 'jne' => $jne, 'jnt' => $jnt]);
+    }
+    public function checkout(){
+        session()->put('kembali', url()->previous());
+        if(!auth()->check()){
+            $cartCount = 0;
+        }else{
+            $cartCount = Cart::where('user_id',auth()->user()->id)->count();
+            if($cartCount == null){
+                $cartCount = 0;
+            }
+        }
+        if(!auth()->check()){
+            return redirect()->route('filament.admin.auth.login')->with('error', 'Silahkan login terlebih dahulu');
+        }
+        $cart = Cart::where('user_id', auth()->user()->id)->get()->where('is_selected', 1);
+        $total_harga= 0;
+        foreach($cart as $c){
+            $total_harga = $total_harga + ($c->product->harga * $c->qty);
+        }
+        if($cart->count() == 0){
+            return redirect()->back()->with('error', 'Silahkan pilih produk terlebih dahulu');
+        }
+        $rajaOngkirController = new RajaOngkirController;
+         $jne = json_decode($rajaOngkirController->ongkir('1', 'single', 'jne'));
+         $jnt = json_decode($rajaOngkirController->ongkir('1', 'single', 'jnt'));
+        $customer =Customer::where('user_id', auth()->user()->id)->first();
+        return view('transaction.checkout', ['cart' => $cart, 'customer' => $customer, 'cartCount'=>$cartCount, 'jne' => $jne, 'jnt' => $jnt, 'total_harga' => $total_harga]);
     }
 }

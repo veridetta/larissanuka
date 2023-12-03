@@ -66,7 +66,7 @@
                         <div class="col-12 row">
                             @foreach ($baru as $pr)
                             <div class="col-4 p-2 h-100">
-                                <div class="card card-pink">
+                                <div class="card card-pink h-100">
                                     <div class="card-body">
                                         <p  class="text-center"><img src="{{ asset('storage/'.$pr->productImage->first()->path) }}" alt="" style="width: 100%;height:250x;"></p>
                                         <h4 class="text-left">{{$pr->nama}}</h4>

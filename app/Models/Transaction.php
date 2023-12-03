@@ -21,11 +21,16 @@ class Transaction extends Model
     //relasi service
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->hasOne(Service::class);
     }
     //relasi delivery address
     public function deliveryAddress()
     {
         return $this->hasOne(DeliveryAddress::class);
+    }
+    //customer
+    public function customer()
+    {
+        return $this->hasOne(Customer::class,'user_id','user_id');
     }
 }

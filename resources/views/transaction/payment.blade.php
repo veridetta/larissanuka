@@ -25,34 +25,32 @@
                 </button>
             </div>
         @endif
-        <div class="col-12 mt-5 d-flex justify-content-center">
-            <div class="col-6">
-                <form class="form-inline my-2 my-lg-0" method="post" action="{{route('public.product')}}">
-                    @csrf
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text h-100" id="basic-addon1"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+        <div class="col-12 mt-5 d-flex justify-content-center pr-5 row">
+            <div class="col-12 d-flex justify-content-center p-3">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-title">
+                      <h4 class="card-header">Pilih Metode Pembayaran</h4>
                     </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-12 row">
-            @foreach ($produk as $pr)
-            <div class="col-4 p-5 h-100">
-                <div class="card card-pink h-100">
                     <div class="card-body">
-                        <p  class="text-center"><img src="{{ asset('storage/'.$pr->productImage->first()->path) }}" alt="" style="width: 100%;height:250x;"></p>
-                        <h4 class="text-left">{{$pr->nama}}</h4>
-                        <h5 class="fw-bold">Rp. {{ number_format($pr->harga, 2, ',', '.') }}</h5>
-                        <p>{!!$pr->deskripsi!!}</p>
-                        <a class="btn btn-pink" href="{{url('product_detail/'.$pr->id)}}">Lihat Produk</a>
+                      <div class="row">
+                        <div class="col-md">
+                          <div class="form-check custom-option custom-option-basic">
+                            <label class="form-check-label custom-option-content" for="customRadioTemp2">
+                              <input name="customRadioTemp" class="form-check-input" type="radio" value="" id="customRadioTemp2">
+                              <span class="custom-option-body">
+                                <small>Melalui virtual account.</small>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                        <p>Silahkan tekan tombol berikut untuk melanjutkan pembayaran</p>
+                        <button type="button" id="btnBayar" class="btn btn-warning btn-block mt-3">Bayar</button>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            @endforeach
-            {{ $produk->links('pagination::bootstrap-4') }}
+              </div>
         </div>
     </div>
 @endsection
@@ -63,4 +61,12 @@
 
 @section('user_js')
     <!-- Your home page JavaScript goes here -->
+    <script>
+        $('#btnBayar').click(function(){
+          var id = '{{$order->id}}';
+          var type = '{{$type}}';
+          var url = "/post-pembayaran/"+id+"/"+type;
+          window.location.href = url;
+        })
+      </script>
 @endsection

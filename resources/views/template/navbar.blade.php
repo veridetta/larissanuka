@@ -13,7 +13,7 @@
                     <a class="nav-link" href="{{route('public.product')}}">Product</a>
                 </li>
                 <li class="nav-item pr-2">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{route('user.cart')}}">
                         Keranjang
                         @if($cartCount > 0)
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -23,10 +23,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Transaksi</a>
+                    <a class="nav-link" href="{{route('user.favorit')}}">Favorit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="{{route('user.transaction')}}">Transaksi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('user.index')}}">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('auth.logout') }}">Logout</a>

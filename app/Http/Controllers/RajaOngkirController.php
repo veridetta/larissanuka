@@ -110,7 +110,7 @@ class RajaOngkirController extends Controller
             $destination = $customer->kota_id;
             $origin = 497;
         }else{
-            $cart = Cart::where('user_id', auth()->user()->id)->get()->where('isSelected', true);
+            $cart = Cart::where('user_id', auth()->user()->id)->get()->where('is_selected', 1);
             $berat = 0;
             foreach ($cart as $item) {
                 $berat = $berat + $item->product->dimension->berat;

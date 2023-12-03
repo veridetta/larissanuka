@@ -22,4 +22,9 @@ class Favorit extends Model
     {
         return $this->belongsTo(User::class);
     }
+    //productImage
+    public function productImage()
+    {
+        return $this->belongsTo(ProductImage::class,'product_id','product_id');
+    }
 }

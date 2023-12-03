@@ -25,9 +25,12 @@
                 </button>
             </div>
         @endif
+        <div class="col-12 pt-3 pl-4 pr-4">
+            <p class="h4 text-center">Favorit</p>
+        </div>
         <div class="col-12 mt-5 d-flex justify-content-center">
             <div class="col-6">
-                <form class="form-inline my-2 my-lg-0" method="post" action="{{route('public.product')}}">
+                <form class="form-inline my-2 my-lg-0" method="post" action="{{route('user.favorit')}}">
                     @csrf
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -43,11 +46,11 @@
             <div class="col-4 p-5 h-100">
                 <div class="card card-pink h-100">
                     <div class="card-body">
-                        <p  class="text-center"><img src="{{ asset('storage/'.$pr->productImage->first()->path) }}" alt="" style="width: 100%;height:250x;"></p>
-                        <h4 class="text-left">{{$pr->nama}}</h4>
-                        <h5 class="fw-bold">Rp. {{ number_format($pr->harga, 2, ',', '.') }}</h5>
-                        <p>{!!$pr->deskripsi!!}</p>
-                        <a class="btn btn-pink" href="{{url('product_detail/'.$pr->id)}}">Lihat Produk</a>
+                        <p  class="text-center"><img src="{{ asset('storage/'.$pr->product->productImage->first()->path) }}" alt="" style="width: 100%;height:250x;"></p>
+                        <h4 class="text-left">{{$pr->product->nama}}</h4>
+                        <h5 class="fw-bold">Rp. {{ number_format($pr->product->harga, 2, ',', '.') }}</h5>
+                        <p>{!!$pr->product->deskripsi!!}</p>
+                        <a class="btn btn-pink" href="{{url('product_detail/'.$pr->product->id)}}">Lihat Produk</a>
                     </div>
                 </div>
             </div>

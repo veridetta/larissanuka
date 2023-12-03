@@ -27,12 +27,13 @@
         @endif
         <div class="col-12 mt-5 d-flex justify-content-end pr-5">
             <div class="col-6">
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0" method="post" action="{{route('public.product')}}">
+                    @csrf
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text h-100" id="basic-addon1"><i class="fa fa-search"></i></span>
                         </div>
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
                     </div>
                 </form>
             </div>
@@ -111,7 +112,7 @@
                         <div class="col-6 p-2">
                             <div class="card h-100">
                                 <div class="card-body p-4 h-100">
-                                    <p  class="text-center"><img src="{{ asset('storage/'.$terkait->productImage->first()) }}" alt="" style="width: 100%;height:250x;"></p>
+                                    <p  class="text-center"><img src="{{ asset('storage/'.$terkait->productImage->first()->path) }}" alt="" style="width: 100%;height:250x;"></p>
                                     <h6 class=""><a href="{{url('product_detail/'.$terkait->id)}}">{{$terkait->nama}}</a></h6>
                                     <p class="fw-bold">Rp. {{ number_format($terkait->harga, 2, ',', '.') }}</p>
                                 </div>
