@@ -130,7 +130,7 @@ class PublicController extends Controller
         ]);
          $rajaOngkirController = new RajaOngkirController;
          $jne = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jne'));
-         $jnt = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'jnt'));
+         $jnt = json_decode($rajaOngkirController->ongkir($request->product_id, 'single', 'tiki'));
         // $jne=json_decode('{"rajaongkir":{"query":{"origin":"501","destination":"114","weight":1700,"courier":"jne"},"status":{"code":200,"description":"OK"},"origin_details":{"city_id":"501","province_id":"5","province":"DI Yogyakarta","type":"Kota","city_name":"Yogyakarta","postal_code":"55111"},"destination_details":{"city_id":"114","province_id":"1","province":"Bali","type":"Kota","city_name":"Denpasar","postal_code":"80227"},"results":[{"code":"jne","name":"Jalur Nugraha Ekakurir (JNE)","costs":[{"service":"OKE","description":"Ongkos Kirim Ekonomis","cost":[{"value":54000,"etd":"4-5","note":""}]},{"service":"REG","description":"Layanan Reguler","cost":[{"value":62000,"etd":"2-3","note":""}]}]}]}}');
         // $jnt = $jne;
         $customer =Customer::where('user_id', auth()->user()->id)->first();
@@ -160,7 +160,7 @@ class PublicController extends Controller
         }
         $rajaOngkirController = new RajaOngkirController;
          $jne = json_decode($rajaOngkirController->ongkir('1', 'single', 'jne'));
-         $jnt = json_decode($rajaOngkirController->ongkir('1', 'single', 'jnt'));
+         $jnt = json_decode($rajaOngkirController->ongkir('1', 'single', 'tiki'));
         $customer =Customer::where('user_id', auth()->user()->id)->first();
         return view('transaction.checkout', ['cart' => $cart, 'customer' => $customer, 'cartCount'=>$cartCount, 'jne' => $jne, 'jnt' => $jnt, 'total_harga' => $total_harga]);
     }

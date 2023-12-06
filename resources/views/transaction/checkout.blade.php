@@ -78,7 +78,7 @@
                     <div class="card">
                         <div class="card-header" id="heading-jnt">
                             <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-jnt" aria-expanded="true" aria-controls="collapse-jnt">J & T</button>
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-jnt" aria-expanded="true" aria-controls="collapse-jnt">Tiki</button>
                             </h5>
                         </div>
 
